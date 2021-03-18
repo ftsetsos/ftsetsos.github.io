@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Μελέτη υποψηφίου γονιδίου</title>
+<!--	<link rel="stylesheet" href="" />-->
+
+<style>
+body {font-size: 14px;}
+div.intro{}
+div.main{width: 700px}
+div.sourcecode {background-color: black; 
+				margin-left:20px; 
+				margin-right:-20px;
+				color: #ffffcc; 
+				width: 900px; 
+				padding: 5px; 
+				font-family: courier; 
+				font-weight: bold;}
+div.output {background-color: black; 
+				margin-left:20px; 
+				margin-right:-20px;
+				color: #cccccc; 
+				width: 900px; 
+				padding: 5px; 
+				font-family: courier; 
+				font-weight: bold;}
+table {font-family: arial, sans-serif;
+		border-collapse: collapse;
+		margin-left: 40px;
+		margin-right: -40px;}
+td, th {border: 1px solid #dddddd;
+		text-align: left;
+		padding: 8px;}
+tr:nth-child(even) {background-color: #dddddd;}
+</style>
+
+</head>
+
+
+
+<body>
+<h1> Μελέτη υποψήφιου γονιδίου</h1>
+<h4>Φώτιος Τσέτσος (<a href="mailto:ftsetsos@aegean.gr">ftsetsos@aegean.gr</a>)</h4>
+</div>
+
+
+<p><em>Δημιουργήθηκε στις 2021-03-16</em></p>
+
+<div class="intro">
+<p>Καλώς ορίσατε στη σειρά πρακτικού εκπαιδευτικού υλικού . Αν είναι η πρώτη φορά που έρχεστε εδώ, μπορείτε να δείτε και τις υπόλοιπες ροές εργασίας εδώ.</p>
+</div>
+
+<div class="main">
+<p>Στη συγκεκριμένη ροή εργασίας, θα εξασκηθείτε στο πώς να απομονώνετε ένα γονίδιο από ένα ολόκληρο σετ δεδομένων και να το αναλύσετε.<p>
+
+<p>Ας ξεκινήσουμε με το σετ δεδομένων που θα αναλύσουμε. Το εργαλείο plink μπορεί να μας δώσει μια σύντομη περιγραφή του σετ δεδομένων, πόσα άτομα περιέχει, πόσους δείκτες και τα αδρά χαρακτηριστικά τους.</p>
+</div>
+
+<div class="sourcecode">
+plink.exe --noweb --allow-no-sex --bfile dataset --out test
+</div>
+
+<div class="output">
+<pre>@----------------------------------------------------------@
+|        PLINK!       |     v1.07      |   10/Aug/2009     |
+|----------------------------------------------------------|
+|  (C) 2009 Shaun Purcell, GNU General Public License, v2  |
+|----------------------------------------------------------|
+|  For documentation, citation & bug-report instructions:  |
+|        http://pngu.mgh.harvard.edu/purcell/plink/        |
+@----------------------------------------------------------@
+
+Skipping web check... [ --noweb ] 
+Writing this text to log file [ test.log ]
+Analysis started: Thu Mar 18 18:30:39 2021
+
+Options in effect:
+	--noweb
+	--bfile dataset
+	--out test
+
+Reading map (extended format) from [ dataset.bim ] 
+592043 markers to be included from [ dataset.bim ]
+Reading pedigree information from [ dataset.fam ] 
+1069 individuals read from [ dataset.fam ] 
+1069 individuals with nonmissing phenotypes
+Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
+Missing phenotype value is also -9
+693 cases, 376 controls and 0 missing
+489 males, 580 females, and 0 of unspecified sex
+Reading genotype bitfile from [ dataset.bed ] 
+Detected that binary PED file is v1.00 SNP-major mode
+Before frequency and genotyping pruning, there are 592043 SNPs
+1069 founders and 0 non-founders found
+78711 heterozygous haploid genotypes; set to missing
+Writing list of heterozygous haploid genotypes to [ test.hh ]
+Total genotyping rate in remaining individuals is 0.998704
+0 SNPs failed missingness test ( GENO &gt; 1 )
+0 SNPs failed frequency test ( MAF &lt; 0 )
+After frequency and genotyping pruning, there are 592043 SNPs
+After filtering, 693 cases, 376 controls and 0 missing
+After filtering, 489 males, 580 females, and 0 of unspecified sex
+
+Analysis finished: Thu Mar 18 18:30:56 2021</pre>
+</div>
+
+<div>
+<p>Σε αυτό το σετ δεδομένων θέλουμε να μελετήσουμε το γονίδιο GCG.</p>
+
+ <table>
+	<tr>
+	<th>Όνομα γονιδίου</th>
+	<th>Χρωμόσωμα</th>
+	<th>Αρχή (hg19)</th>
+	<th>Τέλος (hg19)</th>
+	</tr>
+	<tr>
+	<td>GCG</td>
+	<td>2</td>
+	<td>162.999.385</td>
+	<td>163.008.914</td>
+	</tr>
+</table> 
+
+<p>Τα στοιχεία αυτά μπορούν να χρησιμοποιηθούν για να εξάγουμε αυτήν την περιοχή από το σετ δεδομένων μας.</p>
+
+</div>
+
+<div class="sourcecode">
+plink.exe --noweb --allow-no-sex --bfile dataset --chr 2 --from-kb 162999 --to-kb 163009 --out GCG --make-bed
+</div>
+
+<div class="output">
+<pre>@----------------------------------------------------------@
+|        PLINK!       |     v1.07      |   10/Aug/2009     |
+|----------------------------------------------------------|
+|  (C) 2009 Shaun Purcell, GNU General Public License, v2  |
+|----------------------------------------------------------|
+|  For documentation, citation & bug-report instructions:  |
+|        http://pngu.mgh.harvard.edu/purcell/plink/        |
+@----------------------------------------------------------@
+
+Skipping web check... [ --noweb ] 
+Writing this text to log file [ GCG.log ] 
+Analysis started: Wed Mar 17 20:29:35 2021
+
+Options in effect:
+	--noweb		<span style="color: yellow">Η εντολή --noweb παρακάμπτει τον έλεγχο για νέες εκδόσεις</span>
+	--bfile dataset	<span style="color: yellow">Το σύνολο δεδομένων που θα διαβαστεί από το plink </span>
+	--chr 2		<span style="color: yellow">Απομόνωση του χρωμοσώματος 2 από το συνολικό σετ </span>
+	--from-kb 162999 <span style="color: yellow">Από τη βάση 162.999.000 </span>
+	--to-kb 163009	<span style="color: yellow">μέχρι τη βάση 163.009.000 </span>
+	--out GCG	<span style="color: yellow">Όσα αρχεία θα δημιουργηθούν θα πάρουν το όνομα της παραμέτρου </span>
+	--make-bed	<span style="color: yellow">Δημιουργία καινούριου σετ δεδομένων με τα χαρακτηριστικά που αναφέρθηκαν άνωθεν </span>
+
+Reading map (extended format) from [ dataset.bim ] 
+592043 markers to be included from [ dataset.bim ]
+Scan region on chromosome 2 from [ rs199563306 ] to [ rs5647 ]
+Reading pedigree information from [ dataset.fam ] 
+1069 individuals read from [ dataset.fam ] 
+1069 individuals with nonmissing phenotypes
+Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
+Missing phenotype value is also -9
+693 cases, 376 controls and 0 missing
+489 males, 580 females, and 0 of unspecified sex
+Reading genotype bitfile from [ dataset.bed ] 
+Detected that binary PED file is v1.00 SNP-major mode
+Before frequency and genotyping pruning, there are 7 SNPs
+1069 founders and 0 non-founders found
+Total genotyping rate in remaining individuals is 0.997862
+0 SNPs failed missingness test ( GENO &gt; 1 )
+0 SNPs failed frequency test ( MAF &lt; 0 )
+After frequency and genotyping pruning, there are 7 SNPs
+After filtering, 693 cases, 376 controls and 0 missing
+After filtering, 489 males, 580 females, and 0 of unspecified sex
+Writing pedigree information to [ GCG.fam ] 
+Writing map (extended format) information to [ GCG.bim ] 
+Writing genotype bitfile to [ GCG.bed ] 
+Using (default) SNP-major mode
+
+Analysis finished: Wed Mar 17 20:29:40 2021</pre>
+</div>
+
+</body>
+</html> 
+
+
