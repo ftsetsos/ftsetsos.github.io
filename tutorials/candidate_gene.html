@@ -17,7 +17,7 @@ body {font-size: 14px;
 div.intro{width: 600px;
 			margin-bottom: 2cm;}
 div.main{width: 800px;
-		margin-bottom: 2cm;}
+		margin-bottom: 1cm;}
 div.sourcecode {background-color: #141452; 
 				margin-left:20px; 
 				margin-right:-20px;
@@ -29,6 +29,7 @@ div.sourcecode {background-color: #141452;
 div.output {background-color: #141452; 
 				margin-left:20px; 
 				margin-right:-20px;
+				margin-bottom: 2cm;
 				color: #cccccc; 
 				width: 1000px; 
 				padding: 5px; 
@@ -198,40 +199,41 @@ plink.exe --noweb --allow-no-sex --bfile dataset --out test
 
 Skipping web check... [ --noweb ] 
 Writing this text to log file [ test.log ]
-Analysis started: Thu Mar 18 18:30:39 2021
+Analysis started: Sat Mar 20 20:16:34 2021
 
 Options in effect:
-	--noweb		<span style="color: yellow">Η εντολή --noweb παρακάμπτει τον έλεγχο για νέες εκδόσεις</span>
+	--noweb		<span style="color: yellow">Παρακάμπτει τον έλεγχο για νέες εκδόσεις</span>
+	--allow-no-sex <span style="color: yellow">Κρατάει μέσα τα άτομα που δεν έχουν καταγεγραμμένο φύλο</span>
 	--bfile dataset	<span style="color: yellow">Το σύνολο δεδομένων που θα διαβαστεί από το plink </span>
 	--out test	<span style="color: yellow">Όσα αρχεία θα δημιουργηθούν θα πάρουν το όνομα της παραμέτρου </span>
 
 Reading map (extended format) from [ dataset.bim ] 
-592043 markers to be included from [ dataset.bim ] <span style="color: yellow">Δείκτες στο σετ </span>
+8930 markers to be included from [ dataset.bim ] <span style="color: yellow">Δείκτες στο σετ </span>
 Reading pedigree information from [ dataset.fam ] 
-1069 individuals read from [ dataset.fam ] <span style="color: yellow">Άτομα στο σετ </span>
-1069 individuals with nonmissing phenotypes
+980 individuals read from [ dataset.fam ] <span style="color: yellow">Άτομα στο σετ </span>
+980 individuals with nonmissing phenotypes
 Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
 Missing phenotype value is also -9
-693 cases, 376 controls and 0 missing
-489 males, 580 females, and 0 of unspecified sex
+624 cases, 356 controls and 0 missing
+451 males, 529 females, and 0 of unspecified sex
 Reading genotype bitfile from [ dataset.bed ] 
 Detected that binary PED file is v1.00 SNP-major mode
-Before frequency and genotyping pruning, there are 592043 SNPs
-1069 founders and 0 non-founders found
-78711 heterozygous haploid genotypes; set to missing
-Writing list of heterozygous haploid genotypes to [ test.hh ]
-Total genotyping rate in remaining individuals is 0.998704
+Before frequency and genotyping pruning, there are 8930 SNPs
+980 founders and 0 non-founders found
+Total genotyping rate in remaining individuals is 0.999119
 0 SNPs failed missingness test ( GENO &gt; 1 )
 0 SNPs failed frequency test ( MAF &lt; 0 )
-After frequency and genotyping pruning, there are 592043 SNPs
-After filtering, 693 cases, 376 controls and 0 missing
-After filtering, 489 males, 580 females, and 0 of unspecified sex
+After frequency and genotyping pruning, there are 8930 SNPs
+After filtering, 624 cases, 356 controls and 0 missing
+After filtering, 451 males, 529 females, and 0 of unspecified sex
 
-Analysis finished: Thu Mar 18 18:30:56 2021</pre>
+Analysis finished: Sat Mar 20 20:16:34 2021</pre>
 </div>
 
-<div>
-<p>Σε αυτό το σετ δεδομένων θέλουμε να μελετήσουμε το γονίδιο GCG.</p>
+<div class="main">
+<p>Σε αυτό το σετ δεδομένων θέλουμε να μελετήσουμε το γονίδιο GCG. To GCG είναι το γονίδιο που κωδικοποιεί την γλυκαγόνη. Περισσότερες πληροφορίες μπορείτε να αντλήσετε για το γονίδιο <a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=GCG">εδώ</a>. Από αυτή τη σελίδα επίσης αντλούμε και την τοποθεσία του γονιδίου.</p>
+
+<p>Μια αναζήτηση στον εξερευνητή γονιδιωμάτων της UCSC δίνει πληροφορίες για την <a href="http://genome-euro.ucsc.edu/cgi-bin/hgTracks?db=hg19&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr2%3A162875411%2D163132882&hgsid=259017334_q0IEAiYLaWJbZJ72AScsIHIttHbo">ευρύτερη περιοχή</a>.</p>
 
 <table>
 	<tr>
@@ -250,10 +252,14 @@ Analysis finished: Thu Mar 18 18:30:56 2021</pre>
 
 <p>Τα στοιχεία αυτά μπορούν να χρησιμοποιηθούν για να εξάγουμε αυτήν την περιοχή από το σετ δεδομένων μας.</p>
 
+<p>Επειδή ένα γονίδιο δεν είναι μόνο η κωδικεύουσα περιοχή του, αλλά χαρακτηρίζεται από πολλά στοιχεία ελέγχου πριν και μετά από αυτό, θα πρέπει να συμπεριλάβουμε και αυτές τις περιοχές στην ανάλυσή μας. Συνηθίζεται αυτό να είναι &plusmn;20kb. Οπότε το όριο 162.999.385 θα γίνει 162.979.385 και το όριο 163.008.914 θα γίνει 163.028.914.</p>
+
+<p>Πάμε λοιπόν να εξάγουμε την περιοχή αυτή από τα δεδομένα μας και να φτιάξουμε ένα μικρό υποσύνολο δεδομένων που να περιέχει μόνο τη συγκεκριμένη περιοχή.</p>
+
 </div>
 
 <div class="sourcecode">
-plink.exe --noweb --allow-no-sex --bfile dataset --chr 2 --from-kb 162999 --to-kb 163009 --out GCG --make-bed
+plink.exe --noweb --allow-no-sex --bfile dataset --chr 2 --from-kb 162979 --to-kb 163029 --out GCG --make-bed
 </div>
 
 <div class="output">
@@ -274,38 +280,119 @@ Options in effect:
 	--noweb
 	--bfile dataset
 	--chr 2		<span style="color: yellow">Απομόνωση του χρωμοσώματος 2 από το συνολικό σετ </span>
-	--from-kb 162999 <span style="color: yellow">Από τη βάση 162.999.000 </span>
-	--to-kb 163009	<span style="color: yellow">μέχρι τη βάση 163.009.000 </span>
+	--from-kb 162979 <span style="color: yellow">Από τη βάση 162.979.000 </span>
+	--to-kb 163029	<span style="color: yellow">μέχρι τη βάση 163.029.000 </span>
 	--out GCG
 	--make-bed	<span style="color: yellow">Δημιουργία καινούριου σετ δεδομένων με τα χαρακτηριστικά που αναφέρθηκαν άνωθεν </span>
 
 Reading map (extended format) from [ dataset.bim ] 
-592043 markers to be included from [ dataset.bim ]
-Scan region on chromosome 2 from [ rs199563306 ] to [ rs5647 ]
+8930 markers to be included from [ dataset.bim ]
+Scan region on chromosome 2 from [ rs2052352 ] to [ rs7583035 ]
 Reading pedigree information from [ dataset.fam ] 
-1069 individuals read from [ dataset.fam ] 
-1069 individuals with nonmissing phenotypes
+980 individuals read from [ dataset.fam ] 
+980 individuals with nonmissing phenotypes
 Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
 Missing phenotype value is also -9
-693 cases, 376 controls and 0 missing
-489 males, 580 females, and 0 of unspecified sex
+624 cases, 356 controls and 0 missing
+451 males, 529 females, and 0 of unspecified sex
 Reading genotype bitfile from [ dataset.bed ] 
 Detected that binary PED file is v1.00 SNP-major mode
-Before frequency and genotyping pruning, there are 7 SNPs
-1069 founders and 0 non-founders found
-Total genotyping rate in remaining individuals is 0.997862
+Before frequency and genotyping pruning, there are 10 SNPs
+980 founders and 0 non-founders found
+Total genotyping rate in remaining individuals is 0.997551
 0 SNPs failed missingness test ( GENO &gt; 1 )
 0 SNPs failed frequency test ( MAF &lt; 0 )
-After frequency and genotyping pruning, there are 7 SNPs
-After filtering, 693 cases, 376 controls and 0 missing
-After filtering, 489 males, 580 females, and 0 of unspecified sex
+After frequency and genotyping pruning, there are 10 SNPs
+After filtering, 624 cases, 356 controls and 0 missing
+After filtering, 451 males, 529 females, and 0 of unspecified sex
 Writing pedigree information to [ GCG.fam ] 
 Writing map (extended format) information to [ GCG.bim ] 
 Writing genotype bitfile to [ GCG.bed ] 
 Using (default) SNP-major mode
 
-Analysis finished: Wed Mar 17 20:29:40 2021</pre>
+Analysis finished: Sat Mar 20 20:19:50 2021</pre>
 </div>
+
+<div class="main">
+
+<p>Καταλήξαμε λοιπόν να δημιουργήσουμε ένα καινούριο σύνολο δεδομένων, το τρίπτυχο GCG.bed, GCG.bim και GCG.fam. Αυτό μπορούμε πλέον να το χρησιμοποιήσουμε σαν είσοδο για τις επόμενες αναλύσεις μας, που είναι η αναλύσεις συσχετισμού.</p>
+
+<p>Η πρώτη ανάλυση συσχετισμού που θα κάνουμε θα είναι η απλή δοκιμασία χ<sup>2</sup>.</p>
+
+</div>
+
+<div class="sourcecode">
+plink.exe --noweb --allow-no-sex --bfile GCG --assoc --out GCG_assoc
+</div>
+
+<div class="output">
+<pre>@----------------------------------------------------------@
+|        PLINK!       |     v1.07      |   10/Aug/2009     |
+|----------------------------------------------------------|
+|  (C) 2009 Shaun Purcell, GNU General Public License, v2  |
+|----------------------------------------------------------|
+|  For documentation, citation & bug-report instructions:  |
+|        http://pngu.mgh.harvard.edu/purcell/plink/        |
+@----------------------------------------------------------@
+
+Skipping web check... [ --noweb ] 
+Writing this text to log file [ GCG_assoc.log ]
+Analysis started: Sat Mar 20 20:21:27 2021
+
+Options in effect:
+	--noweb
+	--allow-no-sex
+	--bfile GCG
+	--assoc <span style="color: yellow">Κάνει τη δοκιμασία χ<sup>2</sup></span>
+	--out GCG_assoc
+
+Reading map (extended format) from [ GCG.bim ] 
+10 markers to be included from [ GCG.bim ]
+Reading pedigree information from [ GCG.fam ] 
+980 individuals read from [ GCG.fam ] 
+980 individuals with nonmissing phenotypes
+Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
+Missing phenotype value is also -9
+624 cases, 356 controls and 0 missing
+451 males, 529 females, and 0 of unspecified sex
+Reading genotype bitfile from [ GCG.bed ] 
+Detected that binary PED file is v1.00 SNP-major mode
+Before frequency and genotyping pruning, there are 10 SNPs
+980 founders and 0 non-founders found
+Total genotyping rate in remaining individuals is 0.997551
+0 SNPs failed missingness test ( GENO &gt; 1 )
+0 SNPs failed frequency test ( MAF &lt; 0 )
+After frequency and genotyping pruning, there are 10 SNPs
+After filtering, 624 cases, 356 controls and 0 missing
+After filtering, 451 males, 529 females, and 0 of unspecified sex
+Writing main association results to [ GCG_assoc.assoc ] 
+
+Analysis finished: Sat Mar 20 20:21:27 2021</pre>
+</div>
+
+<div class="main">
+
+<p>Αυτή η ανάλυση παράγει ένα αρχείο με το όνομα GCG_assoc.assoc. Αυτό το αρχείο μπορούμε να το ανοίξουμε μέσω της εντολής more, ή μέσω notepad ή μέσω excel. Συνήθως είναι πιο γρήγορη η εντολή more.</p>
+</div>
+
+<div class="sourcecode">
+more GCG_assoc.assoc
+</div>
+
+<div class="output">
+<pre> CHR         SNP         BP   A1      F_A      F_U   A2        CHISQ            P           OR 
+   2   rs2052352  162983749    T   0.4463   0.4185    C        1.422       0.2331         1.12 
+   2 rs199563306  163000556    T        0        0    G           NA           NA           NA 
+   2  rs79305438  163000583    T        0        0    C           NA           NA           NA 
+   2 rs150179526  163000601    C 0.001626        0    T        1.143       0.2851           NA 
+   2 rs149306780  163000664    T        0        0    C           NA           NA           NA 
+   2  rs35920035  163002170    T 0.001603 0.002809    C        0.324       0.5692       0.5698 
+   2      rs5649  163003858    T 0.008814 0.001404    C         4.09      0.04313        6.323 
+   2      rs5647  163005158    T 0.007223 0.007022    C     0.002569       0.9596        1.029 
+   2   rs6715725  163024739    C        0        0    T           NA           NA           NA 
+   2   rs7583035  163025929    G 0.004854 0.005666    A      0.05774       0.8101       0.8561 </pre>
+</div>
+
 
 </body>
 </html>
