@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Χρήση του PLINK</title>
+<!--	<link rel="stylesheet" href="" />-->
+
+<style>
+@font-face {
+font-family: "gfsdidot";
+src: url("./GFSDidot.ttf");
+}
+a {text-decoration: none;}
+body {font-size: 14px;
+		font-family: gfsdidot;}
+div.intro{width: 600px;
+			margin-bottom: 2cm;}
+div.main{width: 800px;
+		margin-bottom: 0.5cm;}
+div.sourcecode {background-color: #141452; 
+				margin-left:20px; 
+				margin-right:-20px;
+				color: #ffffcc; 
+				width: 800px; 
+				padding: 5px; 
+				font-family: courier; 
+				font-weight: bold;}
+div.output {background-color: #141452; 
+				margin-left:20px; 
+				margin-right:-20px;
+				margin-bottom: 2cm;
+				color: #cccccc; 
+				width: 800px; 
+				padding: 5px; 
+				font-family: courier; 
+				font-weight: bold;}
+table {border-collapse: collapse;
+		margin-left: 40px;
+		margin-right: -40px;}
+td, th {border: 1px solid #dddddd;
+		text-align: left;
+		padding: 8px;}
+tr:nth-child(even) {background-color: #dddddd;}
+
+.tg  {border: none;}
+.tg td{font-size:12px;
+		overflow:hidden;
+		padding:10px 5px;
+		word-break:normal;}
+.tg th{font-size:12px;
+		font-weight:normal;
+		overflow:hidden;
+		padding:10px 5px;
+		word-break:normal;}
+.tg .tg-uuod{background-color:#EA9999;text-align:left;vertical-align:top}
+.tg .tg-0pky{text-align:left;vertical-align:top}
+.tg .tg-aae2{background-color:#FFD966;text-align:left;vertical-align:top}
+.tg .tg-8jd6{background-color:#D0E0E3;text-align:left;vertical-align:top}
+
+</style>
+
+</head>
+
+
+
+<body>
+<h1>Χρήση του PLINK</h1>
+<h4>Φώτιος Τσέτσος (<a href="mailto:ftsetsos@aegean.gr">ftsetsos@aegean.gr</a>)</h4>
+
+<p><em>Δημιουργήθηκε στις 2021-03-16</em></p>
+
+<div class="intro">
+
+<p>Καλώς ορίσατε στη σειρά πρακτικού εκπαιδευτικού υλικού γονιδιωματικής. Αν είναι η πρώτη φορά που έρχεστε εδώ, μπορείτε να δείτε και τις υπόλοιπες ροές εργασίας <a href="">εδώ</a>.</p>
+<p>Στη συγκεκριμένη ροή εργασίας, θα εξασκηθείτε στο πώς να ανοίγετε το PLINK μέσω των Windows και των Ubuntu.<p>
+
+</div>
+
+<div class="main">
+
+<h2>Τι είναι το PLINK</h2>
+
+<p>Το PLINK είναι ένα δωρεάν, ανοιχτού κώδικα λογισμικό που αποτελεί μια εργαλειοθήκη ανάλυσης γονιδιωμάτων, σχεδιασμένο ώστε να διενεργεία μια πληθώρα βασικών, μεγάλης κλίμακας αναλύσεων με υπολογιστικώς αποδοτικό τρόπο.</p>
+
+<p>Το PLINK εστιάζει αποκλειστικά στην ανάλυση γονοτυπικών/φαινοτυπικών δεδομένων, οπότε δεν υποστηρίζει τα βήματα πριν από αυτό το κομμάτι (πχ σχεδιασμός μελετών, παραγωγή γονοτύπων από πηγαία δεδομένα).</p>
+
+<p>Η έκδοση 1.07 του PLINK αναπτύχθηκε από τον Shaun Purcell ενώ βρισκόταν στο Center for Human Genetic Research (CHGR), στο Massachusetts General Hospital (MGH), και στο Broad Institute of Harvard & MIT, με την υποστήριξη από άλλους.</p>
+
+<p>Η έκδοση 1.9 του PLINK είναι μια νέα έκδοση από τον Chris Chang και τους συνεργάτες του και είναι μια ολοσχερής ανακατασκευή του αρχικού κώδικα και συνιστά μια πολύ σημαντική βελτίωση στην ταχύτητα και λειτουργικότητά του. Οι αλλαγές αυτές επιτρέπουν στο PLINK να χειρίζεται ακόμα μεγαλύτερο όγκο δεδομένων.</p>
+
+<h2>Σύνδεσμοι</h2>
+
+<p>Μπορείτε να κατεβάσετε το PLINK v1.07 από <a href="http://zzz.bwh.harvard.edu/plink/download.shtml">εδώ</a> και το PLINK v1.9 από <a href="https://www.cog-genomics.org/plink2">εδώ</a>.</p>
+
+<p>Για αρχάριους προτείνεται η χρήση του PLINK v1.07.</p>
+
+<h2>PLINK στα windows</h2>
+
+<p>Αφού κατεβάσουμε το αρχείο, δημιουργούμε ένα φάκελο στην επιφάνεια εργασίας μας που ονομάζεται workfolder. Αποσυμπιέζουμε το <a href="http://zzz.bwh.harvard.edu/plink/dist/plink-1.07-dos.zip">plink-1.07-dos.zip</a> μέσα στο φάκελο αυτό. Στο φάκελο αυτό (workfolder) μπορούμε να βάλουμε και ό,τι αρχείο σκοπεύουμε να αναλύσουμε, για ευκολία χρήσης.</p>
+
+<p>Για να τρέξουμε το PLINK ακολουθούμε τα εξής βήματα. Πρώτα πρέπει να βρεθούμε σε περιβάλλον γραμμής εντολών. Στα Windows αυτό γίνεται πηγαίνοντας κάτω αριστερά στην αναζήτηση και πληκτρολογώντας "Command Prompt". Αυτό θα μας προτείνει να ανοίξουμε τη γραμμή εντολών (Command Prompt). Στη συνέχεια θα ανοίξει η γραμμή εντολών, με τοποθεσία το φάκελο χρήστη μας στα Windows. Στο παρακάτω βίντεο έχει μία επίδειξη (μέχρι το 1ο λεπτό). Τη γραμμή εντολών ανοίξτε την απλά, όχι ως διαχειριστής.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/BNPWy9S_e1g?start=18" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>Για να βρεθούμε στο φάκελο workfolder μπορούμε να ακολουθήσουμε την εντολή cd.</p>
+</div>
+
+<div class="sourcecode">
+cd Desktop
+</div>
+
+<div class="sourcecode">
+cd workfolder
+</div>
+
+
+
+
+<div class="main">
+<br>
+
+<p><b>Ένας άλλος πιο εύκολος τρόπος να ανοίξουμε τη γραμμή εντολών</b> είναι να μπούμε στο φάκελο workfolder όπως θα μπαίναμε κανονικά και μετά να πατήσουμε δεξί κλικ->"Άνοιγμα γραμμής εντολών εδώ".</p>
+
+<p>Για να δούμε τα περιεχόμενα του φακέλου μπορούμε να χρησιμοποιήσουμε την εντολή dir.</p>
+</div>
+
+<div class="sourcecode">
+dir
+</div>
+
+<div class="main">
+<br>
+Για να τρέξουμε το PLINK, μπορούμε να πληκτρολογήσουμε την εντολή plink.exe.
+</div>
+
+<div class="sourcecode">
+plink.exe
+</div>
+
+</body>
+</html> 
+
+
